@@ -1,0 +1,1 @@
+import{p as t}from"./chunk-I2C44MCF.js";import{pb as e}from"./chunk-T3TLJCKH.js";var n=class i{transform(r){return t(r)}static \u0275fac=function(p){return new(p||i)};static \u0275pipe=e({name:"piiDisplay",type:i,pure:!0})};export{n as a};

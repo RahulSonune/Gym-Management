@@ -1,0 +1,1 @@
+import{pb as e}from"./chunk-T3TLJCKH.js";function i(t,r="INR",n="en-IN"){return new Intl.NumberFormat(n,{style:"currency",currency:r,minimumFractionDigits:0,maximumFractionDigits:2}).format(t/100)}var m=class t{transform(r,n="INR"){return r==null?"-":i(r,n)}static \u0275fac=function(n){return new(n||t)};static \u0275pipe=e({name:"currencyMinor",type:t,pure:!0})};export{m as a};

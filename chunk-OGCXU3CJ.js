@@ -1,0 +1,1 @@
+import{o as t}from"./chunk-I2C44MCF.js";import{pb as i}from"./chunk-T3TLJCKH.js";var m=class r{transform(e){return e?t(e):"-"}static \u0275fac=function(n){return new(n||r)};static \u0275pipe=i({name:"memberLabel",type:r,pure:!0})};export{m as a};

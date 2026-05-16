@@ -1,0 +1,1 @@
+import{pb as n}from"./chunk-T3TLJCKH.js";var e=class t{transform(r){return r==null||typeof r=="number"&&Number.isNaN(r)||typeof r=="string"&&r.trim()===""?"-":String(r)}static \u0275fac=function(i){return new(i||t)};static \u0275pipe=n({name:"emptyPlaceholder",type:t,pure:!0})};export{e as a};
