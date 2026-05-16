@@ -1,0 +1,157 @@
+@if (detailLoading()) {
+  <div class="detail-loading">
+    <mat-spinner diameter="40"></mat-spinner>
+    <span>Loading member…</span>
+  </div>
+} @else {
+  @if (member(); as m) {
+  <div class="page-header">
+    <div>
+      <h1>{{ displayName(m) }}</h1>
+      <p>{{ m.memberCode | piiDisplay }} · {{ m.phone | piiDisplay }}</p>
+    </div>
+    <div class="actions">
+      <app-status-badge [status]="m.status" />
+      <a mat-stroked-button [routerLink]="['/members', m.id, 'edit']">
+        <mat-icon>edit</mat-icon> Edit
+      </a>
+      <a
+        mat-flat-button
+        color="primary"
+        [routerLink]="['/subscriptions/sell']"
+        [queryParams]="{ memberId: m.id }"
+      >
+        Sell plan
+      </a>
+    </div>
+  </div>
+
+  @if (m.activeSubscription) {
+    <div class="content-card mb-16">
+      <div class="content-card-body sub-banner">
+        <div>
+          <strong>{{ m.activeSubscription.planName | piiDisplay }}</strong>
+          <span class="text-muted">
+            · {{ m.activeSubscription.startDate | emptyPlaceholder }} →
+            {{ m.activeSubscription.endDate | emptyPlaceholder }}
+          </span>
+        </div>
+        <app-status-badge [status]="m.activeSubscription.status" />
+      </div>
+    </div>
+  }
+
+  <mat-tab-group>
+    <mat-tab label="Profile">
+      <div class="tab-content">
+        <dl class="detail-grid">
+          <dt>Email</dt>
+          <dd>{{ m.email | piiDisplay }}</dd>
+          <dt>Branch</dt>
+          <dd>{{ m.branch?.name | emptyPlaceholder }}</dd>
+          <dt>Joined</dt>
+          <dd>{{ m.joinedAt | emptyPlaceholder }}</dd>
+          <dt>Emergency</dt>
+          <dd>{{ formatEmergencyContact(m) }}</dd>
+          <dt>Visits</dt>
+          <dd>{{ m.stats != null ? (m.stats.totalVisits | emptyPlaceholder) : '-' }}</dd>
+          <dt>Last visit</dt>
+          <dd>{{ formatDt(m.stats?.lastVisitAt) }}</dd>
+          <dt>Outstanding</dt>
+          <dd>{{ m.stats?.outstandingAmountMinor | currencyMinor }}</dd>
+        </dl>
+      </div>
+    </mat-tab>
+    <mat-tab label="Subscription">
+      <div class="tab-content">
+        @if (m.activeSubscription; as sub) {
+          <dl class="detail-grid">
+            <dt>Plan</dt>
+            <dd>{{ sub.planName | piiDisplay }}</dd>
+            <dt>Status</dt>
+            <dd><app-status-badge [status]="sub.status" /></dd>
+            <dt>Period</dt>
+            <dd>
+              {{ sub.startDate | emptyPlaceholder }} – {{ sub.endDate | emptyPlaceholder }}
+            </dd>
+            <dt>Days left</dt>
+            <dd>{{ sub.daysRemaining | emptyPlaceholder }}</dd>
+          </dl>
+        } @else {
+          <p class="text-muted">No active subscription.</p>
+          <a
+            mat-flat-button
+            color="primary"
+            routerLink="/subscriptions/sell"
+            [queryParams]="{ memberId: m.id }"
+          >
+            Sell membership
+          </a>
+        }
+      </div>
+    </mat-tab>
+    <mat-tab label="Payments">
+      <div class="tab-content">
+        <table mat-table [dataSource]="payments()" class="full-width">
+          <ng-container matColumnDef="number">
+            <th mat-header-cell *matHeaderCellDef>#</th>
+            <td mat-cell *matCellDef="let p">{{ p.paymentNumber | emptyPlaceholder }}</td>
+          </ng-container>
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef>Amount</th>
+            <td mat-cell *matCellDef="let p">{{ p.amountMinor | currencyMinor }}</td>
+          </ng-container>
+          <ng-container matColumnDef="method">
+            <th mat-header-cell *matHeaderCellDef>Method</th>
+            <td mat-cell *matCellDef="let p">{{ p.method | emptyPlaceholder }}</td>
+          </ng-container>
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>Status</th>
+            <td mat-cell *matCellDef="let p"><app-status-badge [status]="p.status" /></td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="payCols"></tr>
+          <tr mat-row *matRowDef="let row; columns: payCols"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell empty-table-cell" [attr.colspan]="payCols.length">-</td>
+          </tr>
+        </table>
+      </div>
+    </mat-tab>
+    <mat-tab label="Attendance">
+      <div class="tab-content">
+        <table mat-table [dataSource]="attendance()" class="full-width">
+          <ng-container matColumnDef="checkIn">
+            <th mat-header-cell *matHeaderCellDef>Check-in</th>
+            <td mat-cell *matCellDef="let a">{{ formatDt(a.checkInAt) }}</td>
+          </ng-container>
+          <ng-container matColumnDef="checkOut">
+            <th mat-header-cell *matHeaderCellDef>Check-out</th>
+            <td mat-cell *matCellDef="let a">{{ formatDt(a.checkOutAt) }}</td>
+          </ng-container>
+          <ng-container matColumnDef="method">
+            <th mat-header-cell *matHeaderCellDef>Method</th>
+            <td mat-cell *matCellDef="let a">{{ a.method | emptyPlaceholder }}</td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="attCols"></tr>
+          <tr mat-row *matRowDef="let row; columns: attCols"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell empty-table-cell" [attr.colspan]="attCols.length">-</td>
+          </tr>
+        </table>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+  } @else {
+    <div class="page-header">
+      <div>
+        <h1>-</h1>
+        <p class="text-muted">Member could not be loaded</p>
+      </div>
+      <a mat-stroked-button routerLink="/members">
+        <mat-icon>arrow_back</mat-icon>
+        Back to members
+      </a>
+    </div>
+    <p class="text-muted">No data for this member (not found or empty response).</p>
+  }
+}

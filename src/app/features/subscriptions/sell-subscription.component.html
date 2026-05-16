@@ -1,0 +1,130 @@
+<div class="page-header">
+      <div><h1>Sell membership</h1><p>Plan → payment → confirmation</p></div>
+    </div>
+
+    <mat-card>
+      <mat-card-content>
+        <mat-stepper linear #stepper>
+          <mat-step [stepControl]="memberStep">
+            <ng-template matStepLabel>Member</ng-template>
+            <form [formGroup]="memberStep" class="sell-form">
+              <div class="sell-step-fields">
+                <app-member-search (memberSelected)="onMember($event)" />
+                @if (memberRequiredError(); as memberErr) {
+                  <p class="pay-error" role="alert">{{ memberErr }}</p>
+                }
+                @if (member()) {
+                  <p class="selected-member">Selected: <strong>{{ member()! | memberLabel }}</strong></p>
+                }
+              </div>
+              <div class="step-actions">
+                <button mat-button type="button" (click)="goToPlanStep(stepper)">Next</button>
+              </div>
+            </form>
+          </mat-step>
+          <mat-step [stepControl]="planStep">
+            <ng-template matStepLabel>Plan</ng-template>
+            <form [formGroup]="planStep" class="sell-form">
+              <div class="sell-step-fields">
+                <mat-form-field
+                  appearance="outline"
+                  floatLabel="always"
+                  subscriptSizing="dynamic"
+                  class="full-width"
+                >
+                  <mat-label>Membership plan</mat-label>
+                  <mat-select formControlName="planId">
+                    @for (p of plans(); track p.id) {
+                      <mat-option [value]="p.id">{{ p.name }} — {{ p.priceAmountMinor | currencyMinor }} / {{ p.durationDays }} days</mat-option>
+                    }
+                  </mat-select>
+                  <app-field-error [control]="planStep.controls.planId" label="Membership plan" />
+                </mat-form-field>
+                <mat-form-field
+                  appearance="outline"
+                  floatLabel="always"
+                  subscriptSizing="dynamic"
+                  class="full-width"
+                >
+                  <mat-label>Start date</mat-label>
+                  <input matInput type="date" formControlName="startDate" />
+                  <app-field-error [control]="planStep.controls.startDate" label="Start date" />
+                </mat-form-field>
+              </div>
+              <div class="step-actions">
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button type="button" (click)="goToPaymentStep(stepper)">Next</button>
+              </div>
+            </form>
+          </mat-step>
+          <mat-step [stepControl]="paymentStep">
+            <ng-template matStepLabel>Payment</ng-template>
+            <form [formGroup]="paymentStep" class="sell-form">
+              @if (useMockApi) {
+                <p class="hint">Mock API: use <strong>Cash</strong> or <strong>Card</strong> to complete the sale. UPI needs the live backend with Razorpay.</p>
+              }
+              @if (!useMockApi && razorpayConfigResolved() && !razorpayEnabled()) {
+                <p class="hint">
+                  Razorpay is not configured on the API. Use <strong>Cash</strong> or <strong>Card</strong>, or add keys in the server
+                  <code>application.yml</code>
+                  (see <code>docs/razorpay-setup.md</code>).
+                </p>
+              }
+              @if (paymentError(); as err) {
+                <p class="pay-error" role="alert">{{ err }}</p>
+              }
+              <div class="sell-step-fields">
+                <mat-form-field
+                  appearance="outline"
+                  floatLabel="always"
+                  subscriptSizing="dynamic"
+                  class="full-width"
+                >
+                  <mat-label>Amount (₹)</mat-label>
+                  <input matInput type="number" formControlName="amountMajor" min="1" />
+                  <app-field-error [control]="paymentStep.controls.amountMajor" label="Amount" />
+                </mat-form-field>
+                <mat-form-field
+                  appearance="outline"
+                  floatLabel="always"
+                  subscriptSizing="dynamic"
+                  class="full-width"
+                >
+                  <mat-label>Method</mat-label>
+                  <mat-select formControlName="method">
+                    <mat-option value="CASH">Cash</mat-option>
+                    <mat-option value="UPI" [disabled]="upiMethodDisabled()">UPI (Razorpay)</mat-option>
+                    <mat-option value="CARD">Card</mat-option>
+                  </mat-select>
+                  <app-field-error [control]="paymentStep.controls.method" label="Payment method" />
+                  @if (paymentStep.get('method')?.value === 'UPI') {
+                    <mat-hint>Completing the sale opens Razorpay for UPI / card / netbanking.</mat-hint>
+                  }
+                </mat-form-field>
+              </div>
+              <div class="step-actions">
+                <button mat-button matStepperPrevious [disabled]="razorpayLoading()">Back</button>
+                <button
+                  mat-flat-button
+                  color="primary"
+                  type="button"
+                  (click)="complete()"
+                  [disabled]="saving() || razorpayLoading()"
+                >
+                  @if (saving() || razorpayLoading()) {
+                    <mat-spinner class="btn-spinner" diameter="20" />
+                  }
+                  Complete sale
+                </button>
+              </div>
+            </form>
+          </mat-step>
+        </mat-stepper>
+        @if (done()) {
+          <div class="success-msg">
+            <p>Membership sold successfully!</p>
+            <a mat-flat-button color="primary" routerLink="/dashboard">Done</a>
+          </div>
+        }
+      </mat-card-content>
+    </mat-card>

@@ -1,0 +1,41 @@
+<header class="sidebar-brand">
+      <div class="brand-icon-wrap" aria-hidden="true">
+        <mat-icon>fitness_center</mat-icon>
+      </div>
+      <div class="brand-text">
+        <span class="brand-name">{{ appName }}</span>
+        <span class="brand-tagline">Management</span>
+      </div>
+    </header>
+
+    <nav class="sidebar-nav" aria-label="Main navigation">
+      <mat-nav-list class="nav-list">
+        @for (item of mainNav(); track item.route) {
+          <a
+            mat-list-item
+            [routerLink]="item.route"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: item.route === '/dashboard' }"
+          >
+            <mat-icon matListItemIcon aria-hidden="true">{{ item.icon }}</mat-icon>
+            <span matListItemTitle>{{ item.label }}</span>
+          </a>
+        }
+      </mat-nav-list>
+
+      @if (adminNav().length) {
+        <p class="nav-section-label" id="admin-nav-label">Administration</p>
+        <mat-nav-list class="nav-list" aria-labelledby="admin-nav-label">
+          @for (item of adminNav(); track item.route) {
+            <a
+              mat-list-item
+              [routerLink]="item.route"
+              routerLinkActive="active"
+            >
+              <mat-icon matListItemIcon aria-hidden="true">{{ item.icon }}</mat-icon>
+              <span matListItemTitle>{{ item.label }}</span>
+            </a>
+          }
+        </mat-nav-list>
+      }
+    </nav>

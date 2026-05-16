@@ -1,0 +1,69 @@
+<div class="page-header">
+      <div><h1>Record payment</h1><p>Collect payment from a member</p></div>
+    </div>
+    <mat-card class="form-card">
+      <mat-card-content>
+        <app-member-search (memberSelected)="onMemberSelected($event)" />
+        @if (memberRequiredError(); as memberErr) {
+          <p class="pay-error" role="alert">{{ memberErr }}</p>
+        }
+        @if (selectedMember(); as m) {
+          <p class="selected">Paying: <strong>{{ m | memberLabel }}</strong></p>
+        }
+        @if (paymentError(); as err) {
+          <p class="pay-error" role="alert">{{ err }}</p>
+        }
+        @if (useMockApi) {
+          <p class="hint">Razorpay is disabled while using the mock API. Use manual payment or switch to the live backend in <code>environment.ts</code>.</p>
+        }
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-grid">
+          <mat-form-field appearance="outline" floatLabel="always" subscriptSizing="dynamic">
+            <mat-label>Amount (₹)</mat-label>
+            <input matInput type="number" formControlName="amountMajor" min="1" />
+            <app-field-error [control]="form.controls.amountMajor" label="Amount" />
+          </mat-form-field>
+          <mat-form-field appearance="outline" floatLabel="always" subscriptSizing="dynamic">
+            <mat-label>Method</mat-label>
+            <mat-select formControlName="method">
+              <mat-option value="CASH">Cash</mat-option>
+              <mat-option value="UPI">UPI</mat-option>
+              <mat-option value="CARD">Card</mat-option>
+              <mat-option value="BANK_TRANSFER">Bank transfer</mat-option>
+              <mat-option value="ONLINE">Online (recorded manually)</mat-option>
+            </mat-select>
+            <app-field-error [control]="form.controls.method" label="Payment method" />
+          </mat-form-field>
+          <mat-form-field appearance="outline" floatLabel="always" subscriptSizing="dynamic" class="span-2">
+            <mat-label>Notes</mat-label>
+            <input matInput formControlName="notes" />
+          </mat-form-field>
+          <div class="actions span-2">
+            <a mat-button routerLink="/billing">Cancel</a>
+            <button
+              mat-flat-button
+              color="primary"
+              type="submit"
+              [disabled]="saving() || razorpayLoading() || !selectedMember()"
+            >
+              Save payment (manual)
+            </button>
+            @if (razorpayEnabled()) {
+              <button
+                mat-stroked-button
+                color="primary"
+                type="button"
+                [disabled]="saving() || razorpayLoading() || !selectedMember()"
+                (click)="payWithRazorpay()"
+              >
+                @if (razorpayLoading()) {
+                  <mat-spinner diameter="20" />
+                } @else {
+                  <mat-icon>credit_card</mat-icon>
+                }
+                Pay with Razorpay
+              </button>
+            }
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>

@@ -1,0 +1,13 @@
+.header-toolbar {
+        background: #fff;
+        border-bottom: 1px solid #e2e8f0;
+        height: 64px;
+        gap: 12px;
+      }
+      .spacer { flex: 1; }
+      .branch-select { width: 200px; margin-top: 8px; }
+      .branch-label { font-weight: 500; color: #64748b; }
+      .hide-desktop { display: none; }
+      @media (max-width: 768px) {
+        .hide-desktop { display: inline-flex; }
+      }

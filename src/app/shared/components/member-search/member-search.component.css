@@ -1,0 +1,10 @@
+:host {
+  display: block;
+  margin-top: 4px;
+  padding-top: 6px;
+  overflow: visible;
+}
+
+.full-width {
+  width: 100%;
+}

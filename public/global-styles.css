@@ -1,0 +1,283 @@
+/* Design tokens */
+:root {
+  --gym-primary: #2563eb;
+  --gym-primary-dark: #1d4ed8;
+  --gym-primary-light: #3b82f6;
+  --gym-accent: #f59e0b;
+  --gym-success: #16a34a;
+  --gym-warning: #d97706;
+  --gym-danger: #dc2626;
+  --gym-info: #0891b2;
+  --gym-bg-app: #f1f5f9;
+  --gym-bg-card: #ffffff;
+  --gym-text-primary: #0f172a;
+  --gym-text-secondary: #64748b;
+  --gym-border: #e2e8f0;
+  --gym-radius: 10px;
+  --gym-shadow: 0 1px 3px rgba(15, 23, 42, 0.08), 0 4px 12px rgba(15, 23, 42, 0.04);
+}
+
+/* FitLife theme — Material tokens (loads after prebuilt theme) */
+html {
+  --mat-sys-primary: #2563eb;
+  --mat-sys-on-primary: #ffffff;
+  --mat-sys-primary-container: #dbeafe;
+  --mat-sys-on-primary-container: #1e3a8a;
+  --mat-sys-primary-fixed: #dbeafe;
+  --mat-sys-primary-fixed-dim: #93c5fd;
+  --mat-sys-inverse-primary: #93c5fd;
+  --mat-sys-surface-tint: #2563eb;
+
+  --mat-sys-secondary: #d97706;
+  --mat-sys-on-secondary: #ffffff;
+  --mat-sys-secondary-container: #fef3c7;
+  --mat-sys-on-secondary-container: #78350f;
+  --mat-sys-secondary-fixed: #fef3c7;
+  --mat-sys-secondary-fixed-dim: #fcd34d;
+
+  --mat-sys-tertiary: #d97706;
+  --mat-sys-on-tertiary: #ffffff;
+  --mat-sys-tertiary-container: #fef3c7;
+  --mat-sys-on-tertiary-container: #78350f;
+
+  --mat-sys-error: #dc2626;
+  --mat-sys-on-error: #ffffff;
+  --mat-sys-error-container: #fee2e2;
+  --mat-sys-on-error-container: #7f1d1d;
+
+  --mat-sys-surface: #f1f5f9;
+  --mat-sys-on-surface: #0f172a;
+  --mat-sys-surface-variant: #e2e8f0;
+  --mat-sys-on-surface-variant: #475569;
+  --mat-sys-background: #f1f5f9;
+  --mat-sys-on-background: #0f172a;
+  --mat-sys-surface-container-lowest: #ffffff;
+  --mat-sys-surface-container-low: #f8fafc;
+  --mat-sys-surface-container: #f1f5f9;
+  --mat-sys-surface-container-high: #e2e8f0;
+  --mat-sys-surface-container-highest: #cbd5e1;
+  --mat-sys-outline: #94a3b8;
+  --mat-sys-outline-variant: #e2e8f0;
+
+  --mat-sys-body-large-font: Inter, sans-serif;
+  --mat-sys-body-medium-font: Inter, sans-serif;
+  --mat-sys-body-small-font: Inter, sans-serif;
+  --mat-sys-label-large-font: Inter, sans-serif;
+  --mat-sys-label-medium-font: Inter, sans-serif;
+  --mat-sys-label-small-font: Inter, sans-serif;
+  --mat-sys-title-large-font: Inter, sans-serif;
+  --mat-sys-title-medium-font: Inter, sans-serif;
+  --mat-sys-title-small-font: Inter, sans-serif;
+  --mat-sys-headline-large-font: Inter, sans-serif;
+  --mat-sys-headline-medium-font: Inter, sans-serif;
+  --mat-sys-headline-small-font: Inter, sans-serif;
+  --mat-sys-display-large-font: Inter, sans-serif;
+  --mat-sys-display-medium-font: Inter, sans-serif;
+  --mat-sys-display-small-font: Inter, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: var(--gym-bg-app);
+  color: var(--gym-text-primary);
+}
+
+.mat-typography {
+  font-family: 'Inter', sans-serif;
+}
+
+a {
+  color: var(--gym-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--gym-primary-dark);
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.page-header p {
+  margin: 4px 0 0;
+  color: var(--gym-text-secondary);
+  font-size: 0.875rem;
+}
+
+.card-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+.stat-card {
+  background: var(--gym-bg-card);
+  border-radius: var(--gym-radius);
+  padding: 20px;
+  box-shadow: var(--gym-shadow);
+  border: 1px solid var(--gym-border);
+}
+
+.stat-card .label {
+  font-size: 0.8rem;
+  color: var(--gym-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.stat-card .value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+.stat-card.success .value {
+  color: var(--gym-success);
+}
+
+.stat-card.warning .value {
+  color: var(--gym-warning);
+}
+
+.stat-card.danger .value {
+  color: var(--gym-danger);
+}
+
+.stat-card.primary .value {
+  color: var(--gym-primary);
+}
+
+.content-card {
+  background: var(--gym-bg-card);
+  border-radius: var(--gym-radius);
+  box-shadow: var(--gym-shadow);
+  border: 1px solid var(--gym-border);
+  overflow: hidden;
+}
+
+.content-card-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--gym-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.content-card-header h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.content-card-body {
+  padding: 20px;
+}
+
+.content-card .mat-mdc-table {
+  width: 100%;
+}
+
+.content-card .mat-mdc-header-cell {
+  font-weight: 600;
+  color: var(--gym-text-secondary);
+  background: #f8fafc;
+}
+
+.status-active {
+  color: var(--gym-success);
+}
+
+.status-frozen {
+  color: var(--gym-info);
+}
+
+.status-expired {
+  color: var(--gym-warning);
+}
+
+.status-cancelled {
+  color: var(--gym-text-secondary);
+}
+
+.status-danger {
+  color: var(--gym-danger);
+}
+
+.full-width {
+  width: 100%;
+}
+
+.text-muted {
+  color: var(--gym-text-secondary);
+}
+
+.mt-16 {
+  margin-top: 16px;
+}
+
+.mb-16 {
+  margin-bottom: 16px;
+}
+
+.mat-mdc-card {
+  border-radius: var(--gym-radius) !important;
+  border: 1px solid var(--gym-border);
+  box-shadow: var(--gym-shadow) !important;
+}
+
+/* Material horizontal stepper: default padding-top is 0 and overflow clips
+   outline mat-form-field floating labels; header sits flush on the first field. */
+.mat-horizontal-stepper-wrapper {
+  gap: 12px;
+}
+
+.mat-horizontal-content-container {
+  overflow: visible;
+  /* Replace Material's `padding: 0 24px 24px 24px` — top room for labels + step chrome */
+  padding: 28px 24px 24px 24px;
+}
+
+.mat-horizontal-stepper-content.mat-horizontal-stepper-content-current {
+  overflow: visible !important;
+}
+
+.mat-mdc-card-content:has(.mat-stepper-horizontal) {
+  overflow: visible;
+  padding-top: 4px;
+}
+
+/* Outline fields on cards: label text must not blend with the top border stroke */
+.mat-mdc-card .mat-mdc-form-field-appearance-outline .mat-mdc-floating-label {
+  background-color: var(--gym-bg-card);
+  padding: 0 4px;
+  margin-left: -4px;
+  border-radius: 2px;
+}
+
+@media (max-width: 768px) {
+  .hide-mobile {
+    display: none !important;
+  }
+}

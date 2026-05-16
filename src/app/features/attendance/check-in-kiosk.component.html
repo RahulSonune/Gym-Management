@@ -1,0 +1,71 @@
+<div class="page-header">
+  <div>
+    <h1>Attendance kiosk</h1>
+    <p>Search member to check in or check out</p>
+  </div>
+  <a mat-button routerLink="/attendance"><mat-icon>arrow_back</mat-icon> Back</a>
+</div>
+
+<mat-card class="kiosk-card">
+  <mat-card-content>
+    <mat-button-toggle-group
+      class="mode-toggle"
+      [value]="mode()"
+      (change)="setMode($event.value)"
+      aria-label="Check-in or check-out"
+    >
+      <mat-button-toggle value="check-in">
+        <mat-icon>login</mat-icon>
+        Check in
+      </mat-button-toggle>
+      <mat-button-toggle value="check-out">
+        <mat-icon>logout</mat-icon>
+        Check out
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <app-member-search (memberSelected)="onMemberSelected($event)" />
+    @if (loading()) {
+      <p class="text-muted">Processing...</p>
+    }
+
+    @if (mode() === 'check-in' && checkInResult(); as r) {
+      <div class="result" [class.denied]="!r.allowed">
+        <mat-icon>{{ r.allowed ? 'check_circle' : 'cancel' }}</mat-icon>
+        <h2>{{ r.allowed ? 'Welcome!' : 'Access denied' }}</h2>
+        @if (r.member) {
+          <p class="name">{{ r.member | memberLabel }}</p>
+          <p class="code">{{ r.member.memberCode | piiDisplay }}</p>
+        }
+        @if (r.checkInAt) {
+          <p class="time">Checked in at {{ formatDt(r.checkInAt) }}</p>
+        }
+        @if (r.subscription) {
+          <p class="plan">{{ r.subscription.planName | piiDisplay }} · ends {{ r.subscription.endDate }}</p>
+        }
+        @if (r.message) {
+          <p class="message">{{ r.message }}</p>
+        }
+      </div>
+    }
+
+    @if (mode() === 'check-out' && checkOutResult(); as r) {
+      <div class="result" [class.denied]="!r.allowed">
+        <mat-icon>{{ r.allowed ? 'logout' : 'cancel' }}</mat-icon>
+        <h2>{{ r.allowed ? 'Goodbye!' : 'Check-out failed' }}</h2>
+        @if (r.member) {
+          <p class="name">{{ r.member | memberLabel }}</p>
+          <p class="code">{{ r.member.memberCode | piiDisplay }}</p>
+        }
+        @if (r.checkInAt && r.checkOutAt) {
+          <p class="time">{{ formatDt(r.checkInAt) }} → {{ formatDt(r.checkOutAt) }}</p>
+        } @else if (r.checkOutAt) {
+          <p class="time">Checked out at {{ formatDt(r.checkOutAt) }}</p>
+        }
+        @if (r.message) {
+          <p class="message">{{ r.message }}</p>
+        }
+      </div>
+    }
+  </mat-card-content>
+</mat-card>

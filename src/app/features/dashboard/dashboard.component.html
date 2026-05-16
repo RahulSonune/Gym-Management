@@ -1,0 +1,98 @@
+<div class="page-header">
+      <div>
+        <h1>Dashboard</h1>
+        <p>Reception overview for {{ branchName() }}</p>
+      </div>
+      <div class="actions">
+        <a mat-flat-button color="primary" routerLink="/members/new">
+          <mat-icon>person_add</mat-icon> New member
+        </a>
+        <a mat-stroked-button routerLink="/attendance/check-in">
+          <mat-icon>login</mat-icon> Check-in / Check-out
+        </a>
+      </div>
+    </div>
+
+    @if (loading()) {
+      <div class="dashboard-loading">
+        <mat-spinner diameter="40"></mat-spinner>
+        <span>Loading dashboard…</span>
+      </div>
+    }
+
+    @if (error(); as err) {
+      <div class="dashboard-error" role="alert">
+        <mat-icon>error_outline</mat-icon>
+        <div>
+          <p>{{ err }}</p>
+          <button mat-stroked-button type="button" (click)="retry()">Retry</button>
+        </div>
+      </div>
+    }
+
+    @if (summary(); as s) {
+      <div class="card-grid">
+        <div class="stat-card primary">
+          <div class="label">Active members</div>
+          <div class="value">{{ s.activeMembers }}</div>
+        </div>
+        <div class="stat-card success">
+          <div class="label">Check-ins today</div>
+          <div class="value">{{ s.checkInsToday }}</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Currently inside</div>
+          <div class="value">{{ s.currentlyInside }}</div>
+        </div>
+        <div class="stat-card warning">
+          <div class="label">Expiring (7 days)</div>
+          <div class="value">{{ s.expiringIn7Days }}</div>
+        </div>
+        <div class="stat-card danger">
+          <div class="label">Overdue invoices</div>
+          <div class="value">{{ s.overdueInvoices }}</div>
+        </div>
+        <div class="stat-card primary">
+          <div class="label">Revenue today</div>
+          <div class="value">{{ s.revenueTodayMinor | currencyMinor }}</div>
+        </div>
+      </div>
+    }
+
+    <div class="content-card mt-16">
+      <div class="content-card-header">
+        <h2>Expiring memberships</h2>
+        <a mat-button routerLink="/reports">View all reports</a>
+      </div>
+      <table mat-table [dataSource]="expiring()" class="full-width">
+        <ng-container matColumnDef="member">
+          <th mat-header-cell *matHeaderCellDef>Member</th>
+          <td mat-cell *matCellDef="let row">
+            <a [routerLink]="['/members', row.memberId]">{{ row | memberLabel }}</a>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="plan">
+          <th mat-header-cell *matHeaderCellDef>Plan</th>
+          <td mat-cell *matCellDef="let row">{{ row.planName | piiDisplay }}</td>
+        </ng-container>
+        <ng-container matColumnDef="endDate">
+          <th mat-header-cell *matHeaderCellDef>Ends</th>
+          <td mat-cell *matCellDef="let row">{{ row.endDate }}</td>
+        </ng-container>
+        <ng-container matColumnDef="days">
+          <th mat-header-cell *matHeaderCellDef>Days left</th>
+          <td mat-cell *matCellDef="let row">{{ row.daysRemaining }}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="expiringColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: expiringColumns"></tr>
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell empty-row" [attr.colspan]="expiringColumns.length">
+            @if (loading()) {
+              Loading…
+            } @else {
+              No memberships expiring in the next 30 days.
+            }
+          </td>
+        </tr>
+      </table>
+    </div>

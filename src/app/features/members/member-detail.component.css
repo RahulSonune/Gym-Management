@@ -1,0 +1,46 @@
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.sub-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tab-content {
+  padding: 20px 0;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 12px;
+  margin: 0;
+}
+
+dt {
+  color: #64748b;
+  font-weight: 500;
+}
+
+dd {
+  margin: 0;
+}
+
+.detail-loading {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 24px;
+  color: #64748b;
+}
+
+.empty-table-cell {
+  text-align: center;
+  color: #64748b;
+  padding: 24px !important;
+}

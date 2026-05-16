@@ -1,0 +1,5 @@
+.settings-list { display: grid; grid-template-columns: 160px 1fr; gap: 12px; }
+      dt { color: #64748b; font-weight: 500; }
+      dd { margin: 0; }
+      .hint { margin-top: 24px; color: #64748b; font-size: 0.875rem; }
+      code { background: #f1f5f9; padding: 2px 6px; border-radius: 4px; }

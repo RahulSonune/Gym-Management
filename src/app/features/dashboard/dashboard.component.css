@@ -1,0 +1,39 @@
+.actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.dashboard-loading {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 24px;
+  color: var(--gym-text-secondary, #64748b);
+}
+
+.dashboard-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  border-radius: 10px;
+  border: 1px solid #fecaca;
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+.dashboard-error mat-icon {
+  flex-shrink: 0;
+}
+
+.dashboard-error p {
+  margin: 0 0 12px;
+}
+
+.empty-row {
+  text-align: center;
+  color: var(--gym-text-secondary, #64748b);
+  padding: 24px !important;
+}

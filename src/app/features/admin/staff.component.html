@@ -1,0 +1,70 @@
+<div class="page-header">
+  <div>
+    <h1>Staff</h1>
+    <p>Users and role assignments</p>
+  </div>
+  <a mat-flat-button color="primary" routerLink="/admin/staff/new">
+    <mat-icon>person_add</mat-icon>
+    Add staff
+  </a>
+</div>
+
+@if (loading()) {
+  <div class="loading-row">
+    <mat-spinner diameter="36" />
+    <span>Loading staff…</span>
+  </div>
+}
+
+@if (error(); as err) {
+  <p class="list-error" role="alert">{{ err }}</p>
+}
+
+@if (!loading() && !error()) {
+  <div class="content-card">
+    <table mat-table [dataSource]="staff()" class="full-width">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let s">{{ s.fullName | piiDisplay }}</td>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let s">{{ s.email | piiDisplay }}</td>
+      </ng-container>
+      <ng-container matColumnDef="roles">
+        <th mat-header-cell *matHeaderCellDef>Roles</th>
+        <td mat-cell *matCellDef="let s">{{ formatRoles(s.roles) }}</td>
+      </ng-container>
+      <ng-container matColumnDef="branches">
+        <th mat-header-cell *matHeaderCellDef>Branches</th>
+        <td mat-cell *matCellDef="let s">{{ s.branchNames.join(', ') }}</td>
+      </ng-container>
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let s">
+          <app-status-badge
+            [status]="s.isActive ? 'ACTIVE' : 'CANCELLED'"
+            [label]="s.isActive ? 'Active' : 'Inactive'"
+          />
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let s">
+          <a
+            mat-icon-button
+            [routerLink]="['/admin/staff', s.id, 'edit']"
+            aria-label="Edit staff member"
+          >
+            <mat-icon>edit</mat-icon>
+          </a>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns"></tr>
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" [attr.colspan]="columns.length">No staff yet. Add your first team member.</td>
+      </tr>
+    </table>
+  </div>
+}

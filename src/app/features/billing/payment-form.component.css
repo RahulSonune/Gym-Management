@@ -1,0 +1,8 @@
+.form-card { max-width: 560px; }
+      .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; margin-top: 16px; }
+      .span-2 { grid-column: span 2; }
+      .actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 8px; align-items: center; }
+      .pay-error { color: #b91c1c; margin: 8px 0 0; font-size: 0.875rem; }
+      .hint { color: #64748b; font-size: 0.875rem; margin: 8px 0; }
+      .actions mat-spinner { display: inline-block; vertical-align: middle; margin-right: 4px; }
+      .selected { margin: 16px 0; }

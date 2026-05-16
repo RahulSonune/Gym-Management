@@ -1,0 +1,93 @@
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+  padding: 24px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  overflow: visible;
+}
+
+.login-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px 24px 0 !important;
+  margin: 0 !important;
+}
+
+.login-header-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.login-header .mat-mdc-card-title {
+  margin: 0;
+  font-size: 1.35rem;
+  line-height: 1.3;
+}
+
+.login-header .mat-mdc-card-subtitle {
+  margin: 6px 0 0;
+  padding: 0;
+  line-height: 1.4;
+}
+
+.brand-icon {
+  flex-shrink: 0;
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+  color: #2563eb;
+  margin: 0;
+}
+
+.login-content {
+  padding: 20px 24px 24px !important;
+  overflow: visible;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-top: 4px;
+}
+
+.login-form .mat-mdc-form-field {
+  display: block;
+  width: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.submit-btn {
+  height: 48px;
+  margin-top: 0.5rem;
+}
+
+.error {
+  color: #dc2626;
+  font-size: 0.875rem;
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+}
+
+
+.demo-hint {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-top: 16px;
+  text-align: center;
+}

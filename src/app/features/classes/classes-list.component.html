@@ -1,0 +1,17 @@
+<div class="page-header">
+      <div>
+        <h1>Classes</h1>
+        <p>Group class schedules</p>
+      </div>
+    </div>
+    <div class="content-card">
+      <table mat-table [dataSource]="schedules()" class="full-width">
+        <ng-container matColumnDef="class"><th mat-header-cell *matHeaderCellDef>Class</th><td mat-cell *matCellDef="let s">{{ s.classTypeName }}</td></ng-container>
+        <ng-container matColumnDef="trainer"><th mat-header-cell *matHeaderCellDef>Trainer</th><td mat-cell *matCellDef="let s">{{ s.trainerName }}</td></ng-container>
+        <ng-container matColumnDef="time"><th mat-header-cell *matHeaderCellDef>Time</th><td mat-cell *matCellDef="let s">{{ formatDt(s.startAt) }}</td></ng-container>
+        <ng-container matColumnDef="capacity"><th mat-header-cell *matHeaderCellDef>Booked</th><td mat-cell *matCellDef="let s">{{ s.bookedCount }} / {{ s.capacity }}</td></ng-container>
+        <ng-container matColumnDef="status"><th mat-header-cell *matHeaderCellDef>Status</th><td mat-cell *matCellDef="let s"><app-status-badge [status]="s.status" /></td></ng-container>
+        <tr mat-header-row *matHeaderRowDef="columns"></tr>
+        <tr mat-row *matRowDef="let row; columns: columns"></tr>
+      </table>
+    </div>

@@ -1,0 +1,16 @@
+<mat-sidenav-container class="layout-container">
+      <mat-sidenav
+        #drawer
+        [mode]="(isHandset$ | async) ? 'over' : 'side'"
+        [opened]="!(isHandset$ | async)"
+        class="layout-sidenav"
+      >
+        <app-sidebar />
+      </mat-sidenav>
+      <mat-sidenav-content class="layout-content">
+        <app-header (menuToggle)="drawer.toggle()" />
+        <main class="page-content">
+          <router-outlet />
+        </main>
+      </mat-sidenav-content>
+    </mat-sidenav-container>

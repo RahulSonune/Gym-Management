@@ -1,0 +1,18 @@
+<div class="page-header">
+      <div>
+        <h1>Reports</h1>
+        <p>Membership and revenue insights</p>
+      </div>
+    </div>
+    <div class="content-card">
+      <div class="content-card-header"><h2>Expiring in 30 days</h2></div>
+      <table mat-table [dataSource]="expiring()" class="full-width">
+        <ng-container matColumnDef="member"><th mat-header-cell *matHeaderCellDef>Member</th><td mat-cell *matCellDef="let r"><a [routerLink]="['/members', r.memberId]">{{ r | memberLabel }}</a></td></ng-container>
+        <ng-container matColumnDef="phone"><th mat-header-cell *matHeaderCellDef>Phone</th><td mat-cell *matCellDef="let r">{{ r.phone | piiDisplay }}</td></ng-container>
+        <ng-container matColumnDef="plan"><th mat-header-cell *matHeaderCellDef>Plan</th><td mat-cell *matCellDef="let r">{{ r.planName | piiDisplay }}</td></ng-container>
+        <ng-container matColumnDef="end"><th mat-header-cell *matHeaderCellDef>Ends</th><td mat-cell *matCellDef="let r">{{ r.endDate }}</td></ng-container>
+        <ng-container matColumnDef="days"><th mat-header-cell *matHeaderCellDef>Days</th><td mat-cell *matCellDef="let r">{{ r.daysRemaining }}</td></ng-container>
+        <tr mat-header-row *matHeaderRowDef="cols"></tr>
+        <tr mat-row *matRowDef="let row; columns: cols"></tr>
+      </table>
+    </div>

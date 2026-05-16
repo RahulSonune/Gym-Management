@@ -1,0 +1,23 @@
+<div class="page-header">
+      <div>
+        <h1>Settings</h1>
+        <p>Application preferences</p>
+      </div>
+    </div>
+    <mat-card>
+      <mat-card-content>
+        <dl class="settings-list">
+          <dt>Organization</dt>
+          <dd>{{ auth.user()?.organization?.name }}</dd>
+          <dt>Multi-branch</dt>
+          <dd>{{ auth.user()?.organization?.multiBranch ? 'Yes' : 'No' }}</dd>
+          <dt>Currency</dt>
+          <dd>{{ auth.user()?.organization?.currencyCode ?? environment.defaultCurrency }}</dd>
+          <dt>API mode</dt>
+          <dd>{{ environment.useMockApi ? 'Mock (demo)' : 'Live backend' }}</dd>
+          <dt>API URL</dt>
+          <dd>{{ environment.apiUrl }}</dd>
+        </dl>
+        <p class="hint">Connect your Java backend by setting <code>useMockApi: false</code> and <code>apiUrl</code> in environment files.</p>
+      </mat-card-content>
+    </mat-card>

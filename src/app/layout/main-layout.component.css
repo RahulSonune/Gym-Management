@@ -1,0 +1,11 @@
+.layout-container { height: 100vh; }
+      .layout-sidenav {
+        width: 260px;
+        border: none;
+        box-shadow: 2px 0 8px rgba(15, 23, 42, 0.06);
+      }
+      .layout-content { display: flex; flex-direction: column; background: #f1f5f9; }
+      .page-content { flex: 1; padding: 24px; overflow: auto; }
+      @media (max-width: 768px) {
+        .page-content { padding: 16px; }
+      }

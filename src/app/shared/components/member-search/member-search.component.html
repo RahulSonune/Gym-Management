@@ -1,0 +1,23 @@
+<mat-form-field
+      appearance="outline"
+      floatLabel="always"
+      class="full-width"
+      subscriptSizing="dynamic"
+    >
+      <mat-label>Search member (name, phone, code)</mat-label>
+      <mat-icon matPrefix>search</mat-icon>
+      <input
+        matInput
+        [formControl]="searchControl"
+        [matAutocomplete]="auto"
+        placeholder="Type to search..."
+      />
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelect($event.option.value)">
+        @for (m of members$ | async; track m.id) {
+          <mat-option [value]="m">
+            <strong>{{ m | memberLabel }}</strong> —
+            {{ m.memberCode | piiDisplay }} · {{ m.phone | piiDisplay }}
+          </mat-option>
+        }
+      </mat-autocomplete>
+    </mat-form-field>

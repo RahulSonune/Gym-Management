@@ -1,0 +1,11 @@
+.kiosk-card { max-width: 560px; margin: 0 auto; }
+      .mode-toggle { margin-bottom: 20px; display: flex; width: 100%; }
+      .mode-toggle mat-button-toggle { flex: 1; }
+      .time { color: #475569; margin-top: 8px; }
+      .result { text-align: center; padding: 32px; margin-top: 24px; border-radius: 12px; background: #dcfce7; }
+      .result.denied { background: #fee2e2; }
+      .result mat-icon { font-size: 64px; width: 64px; height: 64px; }
+      .result.denied mat-icon { color: #dc2626; }
+      .result:not(.denied) mat-icon { color: #16a34a; }
+      .name { font-size: 1.5rem; font-weight: 700; margin: 8px 0 0; }
+      .code, .plan, .message { color: #64748b; }

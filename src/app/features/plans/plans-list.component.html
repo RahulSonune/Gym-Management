@@ -1,0 +1,18 @@
+<div class="page-header">
+      <div>
+        <h1>Membership plans</h1>
+        <p>Plan catalog for subscriptions</p>
+      </div>
+    </div>
+    <div class="content-card">
+      <table mat-table [dataSource]="plans()" class="full-width">
+        <ng-container matColumnDef="code"><th mat-header-cell *matHeaderCellDef>Code</th><td mat-cell *matCellDef="let p">{{ p.code }}</td></ng-container>
+        <ng-container matColumnDef="name"><th mat-header-cell *matHeaderCellDef>Name</th><td mat-cell *matCellDef="let p">{{ p.name }}</td></ng-container>
+        <ng-container matColumnDef="duration"><th mat-header-cell *matHeaderCellDef>Duration</th><td mat-cell *matCellDef="let p">{{ p.durationDays }} days</td></ng-container>
+        <ng-container matColumnDef="price"><th mat-header-cell *matHeaderCellDef>Price</th><td mat-cell *matCellDef="let p">{{ p.priceAmountMinor | currencyMinor }}</td></ng-container>
+        <ng-container matColumnDef="features"><th mat-header-cell *matHeaderCellDef>Includes</th><td mat-cell *matCellDef="let p">{{ p.allowsClasses ? 'Classes' : '' }} {{ p.allowsPt ? 'PT' : '' }}</td></ng-container>
+        <ng-container matColumnDef="status"><th mat-header-cell *matHeaderCellDef>Status</th><td mat-cell *matCellDef="let p"><app-status-badge [status]="p.isActive ? 'ACTIVE' : 'CANCELLED'" [label]="p.isActive ? 'Active' : 'Inactive'" /></td></ng-container>
+        <tr mat-header-row *matHeaderRowDef="columns"></tr>
+        <tr mat-row *matRowDef="let row; columns: columns"></tr>
+      </table>
+    </div>
