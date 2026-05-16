@@ -35,6 +35,8 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/Gym-Management/",
+              "deployUrl": "/Gym-Management/",
               "budgets": [
                 { "type": "initial", "maximumWarning": "500kB", "maximumError": "2MB" },
                 { "type": "anyComponentStyle", "maximumWarning": "4kB", "maximumError": "8kB" }

@@ -32,7 +32,25 @@ Mock API is enabled in `src/environments/environment.ts` (`useMockApi: true`).
 npm run build:prod
 ```
 
-Output: `dist/gym-management/`
+Output: `dist/gym-management/browser/`
+
+## GitHub Pages
+
+This repo is configured for a **project site** at `https://<username>.github.io/Gym-Management/`.
+
+1. In the repo: **Settings → Pages → Build and deployment → Source**: **GitHub Actions**
+2. Push to `main` (or run the **Deploy to GitHub Pages** workflow manually)
+3. Open `https://<username>.github.io/Gym-Management/` — you should land on the **login** page
+
+Local build matching Pages:
+
+```bash
+npm run build:pages
+```
+
+If your GitHub repo name is **not** `Gym-Management`, change `baseHref` / `deployUrl` in `angular.json` (production) and the `--base-href` flag in `build:pages` and `.github/workflows/github-pages.yml` to `/<your-repo-name>/`.
+
+**Note:** GitHub Pages hosts only the static Angular app. The Java API must be hosted elsewhere; for a demo without a backend, set `useMockApi: true` in `environment.prod.ts` before deploying.
 
 ## Connect to Java backend
 
