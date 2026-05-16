@@ -64,3 +64,5 @@ Output: `dist/gym-management/`
 ## Stack
 
 Angular 19, Angular Material, standalone components, signals, lazy routes
+# Gym-Management
+gym management frontend
